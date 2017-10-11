@@ -1,0 +1,18 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+#if ($version.endsWith('-SNAPSHOT'))
+#set ($futureVersion = $version.substring(0,$version.indexOf('-SNAPSHOT')))
+#else
+#set ($futureVersion = $version)
+#end
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ${rootArtifactId} Core Extension
+Bundle-SymbolicName: ${rootArtifactId}.core;singleton:=true
+Bundle-Version: ${futureVersion}.qualifier
+Bundle-Activator: ${package}.core.internal.ExtensionActivator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jdt.ls.core
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-$java_version
