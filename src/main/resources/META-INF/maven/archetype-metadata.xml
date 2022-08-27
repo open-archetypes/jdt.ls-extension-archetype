@@ -2,13 +2,16 @@
 <archetype-descriptor name="eclipse.plugin.archetype">
   <requiredProperties>
     <requiredProperty key="tycho_version">
-      <defaultValue>1.0.0</defaultValue>
+      <defaultValue>2.7.4</defaultValue>
     </requiredProperty>
     <requiredProperty key="java_version">
-      <defaultValue>1.8</defaultValue>
+      <defaultValue>17</defaultValue>
     </requiredProperty>
     <requiredProperty key="eclipse_platform">
-      <defaultValue>oxygen</defaultValue>
+      <defaultValue>2022-06</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="jdt_ls_version">
+      <defaultValue>1.14.0.20220721170741</defaultValue>
     </requiredProperty>
     <requiredProperty key="eclipse_org_signing">
       <defaultValue>false</defaultValue>

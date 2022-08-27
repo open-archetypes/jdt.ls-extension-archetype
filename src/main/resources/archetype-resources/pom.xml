@@ -19,6 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <tycho.version>${tycho_version}</tycho.version>
+    <jdt.ls.version>${jdt_ls_version}</jdt.ls.version>
     <tycho.extras.version>${tycho_version}</tycho.extras.version>
     <tycho.scmUrl>scm:git:https://github.com/CHANGE/ME.git</tycho.scmUrl>
     <tycho.generateSourceReferences>true</tycho.generateSourceReferences>
@@ -32,7 +33,7 @@
     #end
 
     <!-- Code coverage -->
-    <jacoco.version>0.7.9</jacoco.version>
+    <jacoco.version>0.8.7</jacoco.version>
     <coverage.filter>org.eclipse.jdt.ls.*</coverage.filter>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <jacoco.destFile>${project.build.directory}/jacoco.exec</jacoco.destFile>
@@ -41,9 +42,9 @@
 
   <repositories>
     <repository>
-      <id>${eclipse_platform}</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/${eclipse_platform}</url>
+      <id>repo.eclipse.org</id>
+      <name>jdt.ls releases</name>
+      <url>https://repo.eclipse.org/content/repositories/jdtls-releases/</url>
     </repository>
     <repository>
       <id>jdt.ls</id>
@@ -73,31 +74,35 @@
         <version>${symbol_dollar}{tycho.version}</version>
         <configuration>
           <resolver>p2</resolver>
-          <pomDependencies>consider</pomDependencies>
-          <ignoreTychoRepositories>true</ignoreTychoRepositories>
+          <target>
+            <artifact>
+              <groupId>org.eclipse.jdt.ls</groupId>
+              <artifactId>org.eclipse.jdt.ls.tp</artifactId>
+              <version>${symbol_dollar}{jdt.ls.version}</version>
+            </artifact>
+          </target>
+          <environments>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
         </configuration>
       </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.eclipse.tycho</groupId>
-          <artifactId>tycho-packaging-plugin</artifactId>
-          <version>${symbol_dollar}{tycho.version}</version>
-          <configuration>
-            <format>yyyyMMdd-HHmm</format>
-            <sourceReferences>
-              <generate>${symbol_dollar}{tycho.generateSourceReferences}</generate>
-            </sourceReferences>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>org.eclipse.tycho.extras</groupId>
-              <artifactId>tycho-sourceref-jgit</artifactId>
-              <version>${symbol_dollar}{tycho.extras.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-surefire-plugin</artifactId>
@@ -190,20 +195,6 @@
           </plugin>
 
           <plugin>
-            <groupId>org.eclipse.tycho.extras</groupId>
-            <artifactId>tycho-pack200a-plugin</artifactId>
-            <version>${symbol_dollar}{tycho.extras.version}</version>
-            <executions>
-              <execution>
-                <id>pack200-normalize</id>
-                <goals>
-                  <goal>normalize</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
             <groupId>org.eclipse.cbi.maven.plugins</groupId>
             <artifactId>eclipse-jarsigner-plugin</artifactId>
             <version>${symbol_dollar}{jarsigner.version}</version>
@@ -214,20 +205,6 @@
                   <goal>sign</goal>
                 </goals>
                 <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.eclipse.tycho.extras</groupId>
-            <artifactId>tycho-pack200b-plugin</artifactId>
-            <version>${symbol_dollar}{tycho.extras.version}</version>
-            <executions>
-              <execution>
-                <id>pack200-pack</id>
-                <goals>
-                  <goal>pack</goal>
-                </goals>
-                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
